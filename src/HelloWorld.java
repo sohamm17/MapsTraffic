@@ -38,5 +38,6 @@ public class HelloWorld {
 					+ " - " + eachStep.distance.inMeters + "m\n");
 		}
 		System.out.println("Starting time: " + routes[0].legs[0].arrivalTime.toLocalDateTime());
+	
 	}
 }

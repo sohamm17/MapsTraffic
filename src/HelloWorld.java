@@ -18,12 +18,8 @@ public class HelloWorld {
 	static final String PUBLIC_API_KEY = "AIzaSyBNJndqJCWHbRrZ4DbGzWEQ19ROJYfM8wg";
 
 	public static void main(String[] args) throws Exception {
-
-		// Replace the API key below with a valid API key.
+		
 		GeoApiContext context = new GeoApiContext().setApiKey(PUBLIC_API_KEY);
-//		GeocodingResult[] results =  GeocodingApi.geocode(context,
-//		    "7708 109 Street Edmonton").await();
-//		System.out.println(results[0].formattedAddress);
 		
 		DirectionsRoute[] routes = DirectionsApi.newRequest(context)
 		        .origin("7708 109 Street Edmonton NW, AB, Canada")

@@ -12,7 +12,6 @@ import java.io.IOException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-/** Java "Hello, world!" example using the client library */
 public class HelloWorld {
 
 	static final String PUBLIC_API_KEY = "AIzaSyBNJndqJCWHbRrZ4DbGzWEQ19ROJYfM8wg";

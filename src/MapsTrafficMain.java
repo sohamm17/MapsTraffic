@@ -41,4 +41,9 @@ public class MapsTrafficMain {
 		System.out.println("Starting time: " + routes[0].legs[0].arrivalTime.toLocalDateTime());
 	
 	}
+	
+	public static void addDelay()
+	{
+		
+	}
 }

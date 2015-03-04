@@ -12,7 +12,7 @@ import java.io.IOException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-public class HelloWorld {
+public class MapsTrafficMain {
 
 	static final String PUBLIC_API_KEY = "AIzaSyBNJndqJCWHbRrZ4DbGzWEQ19ROJYfM8wg";
 
@@ -36,6 +36,7 @@ public class HelloWorld {
 					+ eachStep.travelMode.toString() + " - " + ((eachStep.subSteps != null) ? eachStep.subSteps.length : 0) + " - "
 					+ eachStep.htmlInstructions
 					+ " - " + eachStep.distance.inMeters + "m\n");
+			System.out.println(eachStep.subSteps);
 		}
 		System.out.println("Starting time: " + routes[0].legs[0].arrivalTime.toLocalDateTime());
 	

@@ -37,12 +37,15 @@ public class MapsTrafficMain {
 		MapsTrafficMain myMap = new MapsTrafficMain();
 		//myMap.hereMapsAPI();
 		
-		Traffic realTimeTraffic = new Traffic();
+		Routing srcToDstRoute = new Routing();
+		srcToDstRoute.getRoute("7708 109 Street Edmonton NW, AB, Canada", "Athabasca Hall, University of Alberta, AB, Canada");
 		
-		String[] crossingRoads = {"82 Ave", "78 Ave"};
-		System.out.println(
-				realTimeTraffic.getAverageSpeed(53.5145554, -113.5103963, 53.5197864, -113.5212539, "109 St", "+", crossingRoads)
-				);
+//		Traffic realTimeTraffic = new Traffic();
+//		
+//		String[] crossingRoads = {"82 Ave", "78 Ave"};
+//		System.out.println(
+//				realTimeTraffic.getAverageSpeed(53.5145554, -113.5103963, 53.5197864, -113.5212539, "109 St", "+", crossingRoads)
+//				);
 		
 		/*
 		rand = new Random(50);// giving seed value to get finite result everytime

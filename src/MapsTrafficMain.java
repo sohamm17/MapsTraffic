@@ -38,7 +38,11 @@ public class MapsTrafficMain {
 		//myMap.hereMapsAPI();
 		
 		Routing srcToDstRoute = new Routing();
-		srcToDstRoute.getRoute("7708 109 Street Edmonton NW, AB, Canada", "Athabasca Hall, University of Alberta, AB, Canada");
+		double walkingSpeed = 0.5; //TODO Have to get from GoogleFit
+		
+		//Geo-coding of heremaps is not very good
+		srcToDstRoute.getRoute("7708 109 Street Edmonton NW, AB, Canada", "University of Alberta, AB, Canada"
+				, walkingSpeed);
 		
 //		Traffic realTimeTraffic = new Traffic();
 //		

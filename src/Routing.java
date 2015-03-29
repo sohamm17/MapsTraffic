@@ -4,6 +4,8 @@ import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -27,21 +29,16 @@ public class Routing
 	static String PUBLICLink = "PublicTransportLinkType";
 	static String PRIVATELink = "PrivateTransportLinkType";
 	
-	public void getRoute(String source_string, String destination_string, double walkSpeed) throws URISyntaxException
+	public RouteInfo getRoute(String source_string, String destination_string, double walkSpeed, String formattedDate) throws URISyntaxException
 	{
-		double[] src_latlon = new double[2], dst_latlon = new double[2];
+		RouteInfo.maneuvar.latlon src_latlon, dst_latlon;
 		
 		//Getting latitude and longitude of source and destination
-		getLatLong(source_string, src_latlon);
-		getLatLong(destination_string, dst_latlon);
+		src_latlon = getLatLong(source_string);
+		dst_latlon = getLatLong(destination_string);
 		
-		System.out.println(src_latlon[0] + "\t" + src_latlon[1]);
-		System.out.println(dst_latlon[0] + "\t" + dst_latlon[1]);
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		@SuppressWarnings("deprecation")
-		Date date = new Date(115, 02, 26, 17, 30, 00);
-		System.out.println(dateFormat.format(date));
+		System.out.println(src_latlon);
+		System.out.println(dst_latlon);
 		
 		//Calculating the route
 		String url = "http://route.cit.api.here.com/routing/7.2/calculateroute.json";
@@ -50,13 +47,13 @@ public class Routing
 		URIBuilder builder = new URIBuilder(url)
 		.addParameter("app_id", APP_ID)
 		.addParameter("app_code", APP_CODE)
-		.addParameter("waypoint0", "geo!" + getAngleAsString(src_latlon))
-		.addParameter("waypoint1", "geo!" + getAngleAsString(dst_latlon))
+		.addParameter("waypoint0", "geo!" + src_latlon.toString())
+		.addParameter("waypoint1", "geo!" + dst_latlon.toString())
 		.addParameter("mode", "fastest;publicTransportTimeTable") //Getting public routes with the fastest options
 		.addParameter("combineChange", "true")
 		.addParameter("alternatives", "5") //getting 2 alternative routes
 		.addParameter("walkSpeed", String.valueOf(walkSpeed)) //allowed value between 0.5 to 2
-		.addParameter("departure", dateFormat.format(date))
+		.addParameter("departure", formattedDate)
 		.addParameter("instructionformat", "text")
 		.addParameter("maneuverAttributes", "trafficTime,waitTime,publicTransportLine,time,roadName,length,link,direction")
 		.addParameter("legAttributes", "links,trafficTime,waypoint")
@@ -66,10 +63,10 @@ public class Routing
 		;
 		
 		System.out.println(builder.build());
-		parseRoutingResponse(builder);
+		return parseRoutingResponse(builder);
 	}
 	
-	public void parseRoutingResponse(URIBuilder uri) throws URISyntaxException
+	public RouteInfo parseRoutingResponse(URIBuilder uri) throws URISyntaxException
 	{
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build())
 		{
@@ -116,13 +113,19 @@ public class Routing
 	            	eachManeuvar.instruction = manvrObj.getJsonString("instruction").getString();
 	            	eachManeuvar.type = manvrObj.getJsonString("_type").getString();
 	            	
+	            	//Parsing the time
+	            	String timeString = manvrObj.getJsonString("time").getString();
+	            	DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH);
+	            	Date dateTime = format.parse(timeString);
+	            	eachManeuvar.time = dateTime;
+	            	
 	            	if(eachManeuvar.type.compareTo(PUBLICManevar) == 0)//Found a public maneuvar
 	            	{
 	            		JsonString temp = manvrObj.getJsonString("stopName");
 	            		if(temp != null)
 	            			eachManeuvar.stopName = temp.getString();
 	            		
-	            		//Getting the busNumber of the public transport
+	            		//Getting the busNumber of the public transport from publicTransportLines
 	            		temp = manvrObj.getJsonString("line");
 	            		if(temp != null)
 	            		{
@@ -205,25 +208,29 @@ public class Routing
 //	            System.out.println(tempManvrID + " : " + travelTime + " , " + length);
 	            
 	            System.out.println("Length of route: " + leg.getJsonNumber("length") + "m, time: " + leg.getJsonNumber("travelTime"));
+	            return route;
 	            
 	        }
 	        catch (Exception e)
 	        {
 	        	System.err.println("Error: " + e.getMessage());
 	        	e.printStackTrace();
+	        	return null;
 	        }
 		}
 		catch (IOException ex) 
         {
 			System.err.println("Error: " + ex.getMessage());
+			return null;
         }
 	}
 	
 	//Given a location it gets the latitude and longitude and returns them through the array latlong
 	//lat is at 0th index, lon is at 1st.
-	public static void getLatLong(String location, double[] latlon) throws URISyntaxException
+	public static RouteInfo.maneuvar.latlon getLatLong(String location) throws URISyntaxException
 	{
 		String url = "http://geocoder.cit.api.here.com/6.2/geocode.json";
+		RouteInfo.maneuvar.latlon latlon = null;
 		
 		URIBuilder builder = new URIBuilder(url)
 			.addParameter("app_id", APP_ID)
@@ -257,8 +264,8 @@ public class Routing
 	            JsonObject displayPosition = firstResult.getJsonObject("Location").getJsonObject("DisplayPosition");
 	            
 	            //System.out.println(displayPosition);
-	            latlon[0] = displayPosition.getJsonNumber("Latitude").doubleValue();
-	            latlon[1] = displayPosition.getJsonNumber("Longitude").doubleValue();
+	            latlon = new RouteInfo.maneuvar.latlon(displayPosition.getJsonNumber("Latitude").doubleValue(), 
+	            		displayPosition.getJsonNumber("Longitude").doubleValue());
 	        }
 	        catch (Exception e)
 	        {
@@ -270,11 +277,6 @@ public class Routing
         {
 			System.err.println("Error: " + ex.getMessage());
         }
-	}
-	
-	//Getting latitude or longitude as string form i.e separated by commas
-	private static String getAngleAsString(double[] angle)
-	{
-		return angle[0] + "," + angle[1];
+		return latlon;
 	}
 }

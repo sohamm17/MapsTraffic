@@ -6,6 +6,16 @@ public class RouteInfo
 {
 	public ArrayList<maneuvar> maneuvars = new ArrayList<>();
 	
+	public String toString()
+	{
+		StringBuilder ret_string = new StringBuilder();
+		for(RouteInfo.maneuvar eachMan: this.maneuvars)
+        {
+        	ret_string.append(eachMan.toString() + "\n") ;
+        }
+		return ret_string.toString();
+	}
+	
 	public static class maneuvar
 	{		
 		public static class latlon
@@ -15,6 +25,10 @@ public class RouteInfo
 			{
 				this.lat = lat;
 				this.lon = lon;
+			}
+			public String toString()
+			{
+				return lat + "," + lon;
 			}
 		}
 		
@@ -38,15 +52,16 @@ public class RouteInfo
 		public Date time; //Not taking the time as of now
 		public String direction;
 		public String roadName = null; //In case of private maneuvars, this is the road-name on which the public walks
-		public String stopName; //In case of public maneuvars, this is the stop-name from which a bus starts
-		public String id;
+		public String stopName = null; //In case of public maneuvars, this is the stop-name from which a bus starts
+		public String id = null;
 		public String type;
-		public String busNumber; //only in case of public transport
+		public String busNumber = null; //only in case of public transport
 		public ArrayList<link> interRoadAndStops  = new ArrayList<>();
 		
 		public String toString()
 		{
-			return type + "\t" + length + "m\t" + travelTime + "sec\t" + roadName + "\t" + interRoadAndStops + "\n" + instruction +"\n";
+			return type + "\t" + time + "\t" + length + "m\t" + travelTime + "sec\t" + 
+		(busNumber == null ? "" : (busNumber + "\t")) + (roadName == null ? stopName : roadName) + "\t" + interRoadAndStops + "\n" + instruction +"\n";
 		}
 	}
 }

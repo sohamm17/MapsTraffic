@@ -37,6 +37,7 @@ public class Traffic
 				.addParameter("app_id", APP_ID)
 				.addParameter("app_code", APP_CODE)
 				.addParameter("bbox", boundingBox);
+			System.out.println(builder.build());
 			
             HttpGet request = new HttpGet(builder.build());
             
@@ -44,7 +45,7 @@ public class Traffic
             HttpResponse result = httpClient.execute(request);
 
             String json = EntityUtils.toString(result.getEntity(), "UTF-8");
-            System.out.println(json);
+            
             try
             {
             	StringReader reader = new StringReader(json);

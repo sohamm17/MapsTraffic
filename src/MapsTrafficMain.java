@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import org.joda.time.DateTime;
@@ -40,16 +43,28 @@ public class MapsTrafficMain {
 		Routing srcToDstRoute = new Routing();
 		double walkingSpeed = 0.5; //TODO Have to get from GoogleFit
 		
-		//Geo-coding of heremaps is not very good
-		srcToDstRoute.getRoute("7708 109 Street Edmonton NW, AB, Canada", "University of Alberta, AB, Canada"
-				, walkingSpeed);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		@SuppressWarnings("deprecation")
+		Date date = new Date(115, 02, 26, 17, 30, 00);
+		System.out.println(dateFormat.format(date));
+		String source_string = "7708 109 Street Edmonton NW, AB, Canada";
+		String destination_string = "University of Alberta, AB, Canada";
 		
-//		Traffic realTimeTraffic = new Traffic();
-//		
-//		String[] crossingRoads = {"82 Ave", "78 Ave"};
-//		System.out.println(
-//				realTimeTraffic.getAverageSpeed(53.5145554, -113.5103963, 53.5197864, -113.5212539, "109 St", "+", crossingRoads)
-//				);
+		//Geo-coding of heremaps is not very good
+		srcToDstRoute.getRoute(source_string, destination_string, walkingSpeed, dateFormat.format(date));
+		
+		Traffic realTimeTraffic = new Traffic();
+		
+		RouteInfo.maneuvar.latlon src_latlon, dst_latlon;
+		
+		src_latlon = Routing.getLatLong(source_string);
+		dst_latlon = Routing.getLatLong(destination_string);
+		
+		String[] crossingRoads = {"82 Av", "78 Av"};
+		System.out.println(
+				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
+						dst_latlon.lon, "109 St", "+", crossingRoads)
+				);
 		
 		/*
 		rand = new Random(50);// giving seed value to get finite result everytime

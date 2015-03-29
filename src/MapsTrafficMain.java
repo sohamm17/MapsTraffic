@@ -108,10 +108,9 @@ public class MapsTrafficMain {
 	}
 	
 	//adding delay to particular step.
-	public static void addDelay(DirectionsStep step)
+	public static void addDelay(RouteInfo.maneuvar step)
 	{
 		int delay = rand.nextInt(10);
 		System.out.println("random delay:" + delay * 60);
-		step.duration.inSeconds += delay *60;
 	}
 }

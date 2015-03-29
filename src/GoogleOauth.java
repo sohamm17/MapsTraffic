@@ -14,14 +14,12 @@ import javax.json.*;
 import javax.json.stream.JsonParser;
 import javax.json.Json;
 
-import com.google.api.client.auth.oauth2.AccessTokenErrorResponse;
-import com.google.api.client.auth.oauth2.AccessTokenResponse;
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 
 
 public class GoogleOauth {
@@ -37,7 +35,7 @@ public class GoogleOauth {
 		    		new JacksonFactory(),
 		        "947782242448-sq1cakbpuapr6qgmnqqu9trkavn25q9k.apps.googleusercontent.com",
 		        "afSCZ9JfdJhHcQ9vMn-JNjhp",
-		        "4/kd8LZ3iy7Uixs_pbJOcAGV8hkBVGmvmUeudBr4fjq8Q.EtlonwDsdYEQEnp6UAPFm0FkJo6qmAI",
+		        "4/zCGDQdDq6eKD86b881CmPUn8mnHIrShg1qa6wdf94ks.Qnq2_7GHj7sTEnp6UAPFm0EagxbJmAI",
 		        "https://developers.google.com/oauthplayground").execute();
 		    System.out.println("test print 2");
 		    
@@ -104,7 +102,7 @@ public class GoogleOauth {
             System.out.println(request);
             
             request.addHeader("content-type", "application/json");
-            request.addHeader("Authorization", "Bearer " + "ya29.QgElVnyMRltIkdTibnKTGW9f5NQTG0znEfC59s-t1Mx56lqTyYrGu0qU5ZdNChcBY6a2ChbHicTQog");
+            request.addHeader("Authorization", "Bearer " + "ya29.RQHFuC12w9PUeHVVwg2PYPrrMOfWqrhjI7a3VGuX_llWoOy-OhngIBpkXhGA93HjZPhah7bQaCXuuw");
             HttpResponse result = httpClient.execute(request);
             System.out.println(result);
 

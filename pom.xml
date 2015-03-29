@@ -33,37 +33,28 @@
     	<groupId>org.glassfish</groupId>
     	<artifactId>javax.json</artifactId>
     	<version>1.0.4</version>
-</dependency>
+	</dependency>
   	<dependency>
   		<groupId>org.apache.maven.plugins</groupId>
   		<artifactId>maven-jar-plugin</artifactId>
   		<version>2.4</version>
   		<type>maven-plugin</type>
   	</dependency>
-   <dependency>
-     <groupId>com.google.apis</groupId>
-     <artifactId>google-api-services-fitness</artifactId>  
-     <version>v1-rev6-1.20.0</version>
-   </dependency>
-   <dependency>
-     <groupId>com.google.apis</groupId>
-     <artifactId>google-api-services-oauth2</artifactId>
-     <version>v2-rev89-1.20.0</version>
-   </dependency>
-   <dependency>
-	<groupId>com.google.api.client</groupId>
-	<artifactId>google-api-client-googleapis</artifactId> 
-	<version>1.4.1-beta</version>
-</dependency>
-<dependency>
- <groupId>com.google.oauth-client</groupId>
- <artifactId>google-oauth-client</artifactId>
- <version>1.18.0-rc</version>
-</dependency>
-<dependency>
-	<groupId>org.apache.httpcomponents</groupId>
-	<artifactId>httpclient</artifactId>
-	<version>4.4</version>
-</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.4</version>
+	</dependency>
+	<dependency>
+        <groupId>com.google.http-client</groupId>
+        <artifactId>google-http-client-jackson2</artifactId>
+        <version>1.17.0-rc</version>
+    </dependency>
+    <dependency>
+		<groupId>com.google.api-client</groupId>
+		<artifactId>google-api-client</artifactId>
+		<version>1.18.0-rc</version>
+	</dependency>
+	
   </dependencies>
 </project>

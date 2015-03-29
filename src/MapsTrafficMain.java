@@ -40,8 +40,13 @@ public class MapsTrafficMain {
 		MapsTrafficMain myMap = new MapsTrafficMain();
 		//myMap.hereMapsAPI();
 		
+		GoogleOauth gO = new GoogleOauth();
+		//String token = gO.retrieve("");
+		//System.out.println("Printing the access token: " + token);
+		
 		Routing srcToDstRoute = new Routing();
-		double walkingSpeed = 0.5; //TODO Have to get from GoogleFit
+		double walkingSpeed = gO.GoogleFitApi(""); //TODO Have to get from GoogleFit
+		System.out.println("Printing walking speed: " + walkingSpeed);
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		@SuppressWarnings("deprecation")

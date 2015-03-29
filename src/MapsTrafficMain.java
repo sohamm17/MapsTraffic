@@ -46,7 +46,7 @@ public class MapsTrafficMain {
 		//System.out.println("Printing the access token: " + token);
 		
 		Routing srcToDstRoute = new Routing();
-		double walkingSpeed = gO.GoogleFitApi(""); //TODO Have to get from GoogleFit
+		double walkingSpeed = 0.5;//gO.GoogleFitApi(""); //TODO Have to get from GoogleFit
 		System.out.println("Printing walking speed: " + walkingSpeed);
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -58,31 +58,34 @@ public class MapsTrafficMain {
 		//Geo-coding of heremaps is not very good
 		RouteInfo route = srcToDstRoute.getRoute(source_string, destination_string, walkingSpeed, dateFormat.format(date));
 		
-		Traffic realTimeTraffic = new Traffic();
-		
 		RouteInfo.maneuvar.latlon src_latlon, dst_latlon;
 		
 		src_latlon = Routing.getLatLong(source_string);
 		dst_latlon = Routing.getLatLong(destination_string);
 		
+		Traffic realTimeTraffic = new Traffic(src_latlon, dst_latlon);
+		
+		System.out.println(realTimeTraffic);
+		
 		String[] crossingRoads = {"82 Av", "78 Av"};
 		System.out.println(
-				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
-						dst_latlon.lon, "109 St", "+", crossingRoads)
+				realTimeTraffic.getAverageSpeedInTraffic("109 St", "+", crossingRoads)
 				);
 		
 		System.out.println(
-				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
-						dst_latlon.lon, "82 Av", "+", new String[] {"111 St", "112 St", "109 St", "114 St"})
+				realTimeTraffic.getAverageSpeedInTraffic("82 Av", "+", new String[] {"111 St", "112 St", "109 St", "114 St"})
 				);
 		
 		System.out.println(
-				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
-						dst_latlon.lon, "114 St", "+", new String[] {"82 Av", "83 Av", "84 Av", "85 Av", "86 Av", "87 Av"})
+				realTimeTraffic.getAverageSpeedInTraffic("114 St", "+", new String[] {"82 Av", "83 Av", "84 Av", "85 Av", "86 Av", "87 Av"})
 				);
+		double trafficModuleAvgSpdSU = realTimeTraffic.getAverageSpeedInTraffic("82 Av", "+", 
+				new String[] {"111 St", "112 St", "109 St", "114 St"});
+		double trafficModuleAvgSpdFF = realTimeTraffic.getFreeFlowSpeed("82 Av", "+", 
+				new String[] {"111 St", "112 St", "109 St", "114 St"});
 		
 		double avgSpeedInFFTotal = (route.maneuvars.get(3).length / route.maneuvars.get(3).travelTime);
-		double avgSpeedIn82Av =  10.75 * (avgSpeedInFFTotal / 15.2);   
+		double avgSpeedIn82Av =  trafficModuleAvgSpdSU * (avgSpeedInFFTotal / trafficModuleAvgSpdFF);   
 		// formula = (FF Avg Speed by Here)/(FF Avg speed by Routing)*(SU Avg speed by here)
 //				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
 //				dst_latlon.lon, "82 Av", "+", new String[] {"111 St", "112 St", "109 St", "114 St"});

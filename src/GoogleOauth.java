@@ -22,6 +22,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 
+@SuppressWarnings("unused")
 public class GoogleOauth {
 	
 	public static double speed;

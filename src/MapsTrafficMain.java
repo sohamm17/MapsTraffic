@@ -30,6 +30,7 @@ import org.apache.http.util.EntityUtils;
 import javax.json.*;
 import javax.json.stream.JsonParser;
 
+@SuppressWarnings("unused")
 public class MapsTrafficMain {
 
 	static final String Google_PUBLIC_API_KEY = "AIzaSyBNJndqJCWHbRrZ4DbGzWEQ19ROJYfM8wg";
@@ -49,7 +50,6 @@ public class MapsTrafficMain {
 		System.out.println("Printing walking speed: " + walkingSpeed);
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		@SuppressWarnings("deprecation")
 		Date date = new Date();//new Date(115, 02, 26, 17, 30, 00);
 		System.out.println(dateFormat.format(date));
 		String source_string = "7708 109 Street Edmonton NW, AB, Canada";

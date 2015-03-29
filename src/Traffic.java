@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;

@@ -92,8 +92,6 @@ public class Routing
 	            JsonArray publicTransportLines = firstRoute.getJsonArray("publicTransportLine");
 	            JsonArray links = leg.getJsonArray("link");
 	            JsonArray maneuvers = leg.getJsonArray("maneuver");
-	            long length = 0, travelTime = 0;
-	            
 	            RouteInfo route = new RouteInfo();
 	            
 	            for(JsonValue eachmanvr: maneuvers)

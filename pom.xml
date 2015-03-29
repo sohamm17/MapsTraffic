@@ -60,5 +60,10 @@
  <artifactId>google-oauth-client</artifactId>
  <version>1.18.0-rc</version>
 </dependency>
+<dependency>
+	<groupId>org.apache.httpcomponents</groupId>
+	<artifactId>httpclient</artifactId>
+	<version>4.4</version>
+</dependency>
   </dependencies>
 </project>

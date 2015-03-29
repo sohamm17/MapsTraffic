@@ -56,7 +56,7 @@ public class MapsTrafficMain {
 		String destination_string = "University of Alberta, AB, Canada";
 		
 		//Geo-coding of heremaps is not very good
-		srcToDstRoute.getRoute(source_string, destination_string, walkingSpeed, dateFormat.format(date));
+		RouteInfo route = srcToDstRoute.getRoute(source_string, destination_string, walkingSpeed, dateFormat.format(date));
 		
 		Traffic realTimeTraffic = new Traffic();
 		
@@ -80,6 +80,22 @@ public class MapsTrafficMain {
 				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
 						dst_latlon.lon, "114 St", "+", new String[] {"82 Av", "83 Av", "84 Av", "85 Av", "86 Av", "87 Av"})
 				);
+		
+		double avgSpeedInFFTotal = (route.maneuvars.get(3).length / route.maneuvars.get(3).travelTime);
+		double avgSpeedIn82Av =  10.75 * (avgSpeedInFFTotal / 15.2);   
+		// formula = (FF Avg Speed by Here)/(FF Avg speed by Routing)*(SU Avg speed by here)
+//				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
+//				dst_latlon.lon, "82 Av", "+", new String[] {"111 St", "112 St", "109 St", "114 St"});
+		long trafficLength = route.maneuvars.get(3).interRoadAndStops.get(0).length 
+				+ route.maneuvars.get(3).interRoadAndStops.get(1).length;
+		long timeInTraffic = (long) (trafficLength / avgSpeedIn82Av);
+		
+		long timeWOTraffic =  (long) ((route.maneuvars.get(3).length - trafficLength) / avgSpeedInFFTotal);
+		
+		long totalTimeModified = (timeInTraffic + timeWOTraffic);
+		
+		System.out.println("Route FF Speed: " + avgSpeedInFFTotal + "\t" + avgSpeedIn82Av);
+		System.out.println("Time considering traffic: " + totalTimeModified);
 		
 		/*
 		rand = new Random(50);// giving seed value to get finite result everytime

@@ -36,7 +36,8 @@ public class Traffic
 			URIBuilder builder = new URIBuilder(url)
 				.addParameter("app_id", APP_ID)
 				.addParameter("app_code", APP_CODE)
-				.addParameter("bbox", boundingBox);
+				.addParameter("bbox", boundingBox)
+				.addParameter("metricSystem", "metric");
 			System.out.println(builder.build());
 			
             HttpGet request = new HttpGet(builder.build());

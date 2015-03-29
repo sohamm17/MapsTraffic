@@ -60,7 +60,7 @@ public class RouteInfo
 		
 		public String toString()
 		{
-			return type + "\t" + time + "\t" + length + "m\t" + travelTime + "sec\t" + 
+			return /*type + "\t" + */time + "\t" + length + "m\t" + travelTime + "sec\t" + 
 		(busNumber == null ? "" : (busNumber + "\t")) + (roadName == null ? stopName : roadName) + "\t" + interRoadAndStops + "\n" + instruction +"\n";
 		}
 	}

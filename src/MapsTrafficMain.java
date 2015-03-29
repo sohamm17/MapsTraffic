@@ -45,7 +45,7 @@ public class MapsTrafficMain {
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		@SuppressWarnings("deprecation")
-		Date date = new Date(115, 02, 26, 17, 30, 00);
+		Date date = new Date();//new Date(115, 02, 26, 17, 30, 00);
 		System.out.println(dateFormat.format(date));
 		String source_string = "7708 109 Street Edmonton NW, AB, Canada";
 		String destination_string = "University of Alberta, AB, Canada";
@@ -64,6 +64,16 @@ public class MapsTrafficMain {
 		System.out.println(
 				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
 						dst_latlon.lon, "109 St", "+", crossingRoads)
+				);
+		
+		System.out.println(
+				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
+						dst_latlon.lon, "82 Av", "+", new String[] {"111 St", "112 St", "109 St", "114 St"})
+				);
+		
+		System.out.println(
+				realTimeTraffic.getAverageSpeed(src_latlon.lat, src_latlon.lon, dst_latlon.lat, 
+						dst_latlon.lon, "114 St", "+", new String[] {"82 Av", "83 Av", "84 Av", "85 Av", "86 Av", "87 Av"})
 				);
 		
 		/*

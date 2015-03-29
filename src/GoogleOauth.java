@@ -35,7 +35,7 @@ public class GoogleOauth {
 		    		new JacksonFactory(),
 		        "947782242448-sq1cakbpuapr6qgmnqqu9trkavn25q9k.apps.googleusercontent.com",
 		        "afSCZ9JfdJhHcQ9vMn-JNjhp",
-		        "4/zCGDQdDq6eKD86b881CmPUn8mnHIrShg1qa6wdf94ks.Qnq2_7GHj7sTEnp6UAPFm0EagxbJmAI",
+		        "4/M3wRf3qYYDZVnsDLjnjG9WMjtn6a8mMhOueBCGjX96g.gonNDVKZvSoSEnp6UAPFm0GMhovJmAI",
 		        "https://developers.google.com/oauthplayground").execute();
 		    System.out.println("test print 2");
 		    
@@ -102,7 +102,7 @@ public class GoogleOauth {
             System.out.println(request);
             
             request.addHeader("content-type", "application/json");
-            request.addHeader("Authorization", "Bearer " + "ya29.RQHFuC12w9PUeHVVwg2PYPrrMOfWqrhjI7a3VGuX_llWoOy-OhngIBpkXhGA93HjZPhah7bQaCXuuw");
+            request.addHeader("Authorization", "Bearer " + "ya29.RQHOg4HLmjT4n8In_UhjuXQgfEMq2qRFm6FThaG6s63RGR3BHRygVeWUTcjenIayCLUj_52F2_hgAw");
             HttpResponse result = httpClient.execute(request);
             System.out.println(result);
 

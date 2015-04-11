@@ -37,8 +37,8 @@ public class Routing
 		src_latlon = getLatLong(source_string);
 		dst_latlon = getLatLong(destination_string);
 		
-		System.out.println(src_latlon);
-		System.out.println(dst_latlon);
+		//System.out.println(src_latlon);
+		//System.out.println(dst_latlon);
 		
 		//Calculating the route
 		String url = "http://route.cit.api.here.com/routing/7.2/calculateroute.json";
@@ -62,7 +62,7 @@ public class Routing
 		.addParameter("metricSystem", "metric")
 		;
 		
-		System.out.println(builder.build());
+		//System.out.println(builder.build());
 		return parseRoutingResponse(builder);
 	}
 	
@@ -173,11 +173,6 @@ public class Routing
 //	            	+ manvrObj.getJsonNumber("length"));
 	            }
 	            
-	            for(RouteInfo.maneuvar eachMan: route.maneuvars)
-	            {
-	            	System.out.println(eachMan);
-	            }
-	            
 //	            String tempManvrID = "";
 //	            length = 0; travelTime = 0;
 //	            for(JsonValue eachLink: links)
@@ -205,7 +200,9 @@ public class Routing
 //	            }
 //	            System.out.println(tempManvrID + " : " + travelTime + " , " + length);
 	            
-	            System.out.println("Length of route: " + leg.getJsonNumber("length") + "m, time: " + leg.getJsonNumber("travelTime"));
+	            route.length = leg.getJsonNumber("length").longValue();
+	            route.travelTime = leg.getJsonNumber("travelTime").longValue();
+	            //System.out.println("Length of route: " + leg.getJsonNumber("length") + "m, time: " + leg.getJsonNumber("travelTime"));
 	            return route;
 	            
 	        }
@@ -237,7 +234,7 @@ public class Routing
 			.addParameter("searchtext", location)
 			;
 		
-		System.out.println(builder.build());
+		//System.out.println(builder.build());
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build())
 		{

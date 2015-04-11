@@ -178,17 +178,22 @@ public class Traffic
 		int crossRoadCount = 0;//counts the number of sections (/crossing roads) for which avergae speed is being counted
 		for(mainRoadway eachRW: roadways)
 		{
-			if(eachRW.description.contains(flowRoadName)) //Found the main roadway on which average speed in traffic
+			if(getAvenueOrStreetNumber(eachRW.description) == getAvenueOrStreetNumber(flowRoadName)) //Found the main roadway on which average speed in traffic
 				//is being calculated
 			{
 				for(mainRoadway.crossFlow eachCF: eachRW.crossingRoads)
 				{
 					//if the this crossFlow description matches with any of the queried crossing roads
 					//and if the direction matches, then consider the speed
-					if(contains(crossingRoads, eachCF.description))
+					//if(contains(crossingRoads, eachCF.description))
+					//System.out.println(eachCF.description);
+					int CFNumber = getAvenueOrStreetNumber(eachCF.description);
+					if(getAvenueOrStreetNumber(crossingRoads[0]) < CFNumber)
 					{
 						crossRoadCount++;
 						totalSpd += eachCF.speedUncapped; //Getting speed uncapped of the road to get average speed in traffic
+						//System.out.println(getAvenueOrStreetNumber(eachCF.description));
+						break;
 					}
 				}
 				break;
@@ -199,6 +204,13 @@ public class Traffic
 			return (totalSpd/crossRoadCount);
 		else
 			return -1;
+	}
+	
+	public static int getAvenueOrStreetNumber(String roadName)
+	{
+		if(roadName.replaceAll("[\\D]", "").compareTo("") == 0)
+			return -1;
+		return Integer.parseInt(roadName.replaceAll("[\\D]", ""));
 	}
 	
 	public double getFreeFlowSpeed(String flowRoadName, String direction, String[] crossingRoads)
@@ -228,6 +240,28 @@ public class Traffic
 			return (totalSpd/crossRoadCount);
 		else
 			return -1;
+	}
+	
+	//Print all the crossing roads and the traffic information between them
+	public void printCrossRoadInfo(String flowRoadName, String direction, String[] crossingRoads)
+	{
+		for(mainRoadway eachRW: roadways)
+		{
+			if(eachRW.description.contains(flowRoadName)) //Found the main roadway on which average speed in traffic
+				//is being calculated
+			{
+				for(mainRoadway.crossFlow eachCF: eachRW.crossingRoads)
+				{
+					//if the this crossFlow description matches with any of the queried crossing roads
+					//and if the direction matches, then consider the speed
+					if(contains(crossingRoads, eachCF.description) && eachCF.direction.compareTo(direction) == 0)
+					{
+						System.out.println(eachCF);
+					}
+				}
+				break;
+			}
+		}
 	}
 	
 	//if the word contains any string in the list it returns true
